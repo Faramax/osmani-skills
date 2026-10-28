@@ -30,7 +30,7 @@ Before writing any code, operate in read-only mode:
 - Map dependencies between components
 - Note risks and unknowns
 
-**Do NOT write code during planning.** The output is a plan document saved to `tasks/plan.md` and a task list recorded in the task list target (see Output Files; default `tasks/todo.md`), not implementation.
+**Do NOT write code during planning.** The output is a plan and a task list recorded as described in Output Files, not implementation.
 
 ### Step 2: Identify the Dependency Graph
 
@@ -142,10 +142,10 @@ If a task is L or larger, it should be broken into smaller tasks. An agent perfo
 
 ## Output Files
 
-- **Plan document:** Save the implementation plan to `tasks/plan.md`. This is always a markdown file — design decisions, risks, and open questions don't map cleanly onto individual tracker issues.
+- **Plan document:** Present the implementation plan to the user. Save it to `tasks/plan.md` only when the user or the project's agent rules ask for a persistent plan file. It is always markdown — design decisions, risks, and open questions don't map cleanly onto individual tracker issues.
 - **Task list:** Record each task in the **task list target** (defined below).
 
-Create the `tasks/` directory if it does not exist.
+Create the `tasks/` directory only when writing one of these files.
 
 **Never overwrite an incomplete plan.** Before writing `tasks/plan.md` or `tasks/todo.md`, check whether they already exist and still contain unchecked tasks:
 
@@ -158,7 +158,7 @@ The same rule applies to an external task list target: never bulk-close or delet
 
 The task list target is where tasks and checkpoints are recorded. It is defined once, here; every other reference in this skill defers to it.
 
-- **Default: a checklist-style markdown file at `tasks/todo.md`.** This is the convention the `/build` command and other downstream tooling expect. Use it unless the project says otherwise.
+- **Default: the agent's built-in task list, if it has one; otherwise a checklist in the presented plan.** Write a checklist-style markdown file at `tasks/todo.md` only when the user or the project asks for it, or when downstream tooling that expects it (the `/build` command, etc.) is in use.
 - **External tracker:** if the project's agent rules (`CLAUDE.md`, `AGENTS.md`, etc.) or the user designate an issue tracker (e.g. GitHub Issues, Jira, Linear, `bd`/beads), create one tracker item per task instead of writing `tasks/todo.md`. Map the Step 4 structure onto the tracker's fields: acceptance criteria and verification steps in the item body, dependencies via the tracker's linking mechanism (`bd dep add`, "blocked by", etc.). Record Step 5 checkpoints as tracker items too, or as a checklist in the plan document if the tracker has no natural equivalent.
 
 When using an external tracker, note it in `tasks/plan.md` (e.g. "Tasks tracked in Linear project FOO") so downstream steps and future sessions know where to look, and keep the plan document's Task List section as an ordered index of tracker item IDs or links rather than a duplicate checklist.
@@ -246,7 +246,7 @@ Before starting implementation, confirm:
 - [ ] Every task has acceptance criteria
 - [ ] Every task has a verification step
 - [ ] Task dependencies are identified and ordered correctly
-- [ ] Tasks are recorded in the task list target (default `tasks/todo.md`)
+- [ ] Tasks are recorded in the task list target
 - [ ] No pre-existing incomplete plan was overwritten without explicit user confirmation
 - [ ] No task touches more than ~5 files
 - [ ] Checkpoints exist between major phases
