@@ -38,7 +38,7 @@ For each slice:
 1. **Implement** the smallest complete piece of functionality
 2. **Test** — run the test suite (or write a test if none exists)
 3. **Verify** — confirm the slice works as expected (tests pass, build succeeds, manual check)
-4. **Commit** -- save your progress with a descriptive message (see `git-workflow-and-versioning` for atomic commit guidance)
+4. **Commit** -- when the user or repository workflow authorizes commits, save your progress with a descriptive message (see `git-workflow-and-versioning` for atomic commit guidance); otherwise leave the verified slice uncommitted in the working tree
 5. **Move to the next slice** — carry forward, don't restart
 
 ## Slicing Strategies
@@ -206,7 +206,7 @@ After each increment, verify with the repository's own commands (see the test-dr
 - [ ] Type checking passes, where the stack has one (`npx tsc --noEmit`, `mypy`, ...)
 - [ ] Linting passes (the repository's lint command)
 - [ ] The new functionality works as expected
-- [ ] The change is committed with a descriptive message
+- [ ] The change is committed with a descriptive message (when commits are authorized)
 
 **Note:** Run each verification command after a change that could affect it. After a successful run, don't repeat the same command unless the code has changed since — re-running on unchanged code adds no information.
 
@@ -228,7 +228,7 @@ After each increment, verify with the repository's own commands (see the test-dr
 - "Let me just quickly add this too" scope expansion
 - Skipping the test/verify step to move faster
 - Build or tests broken between increments
-- Large uncommitted changes accumulating
+- Large unverified changes accumulating
 - Building abstractions before the third use case demands it
 - Touching files outside the task scope "while I'm here"
 - Creating new utility files for one-time operations
@@ -238,11 +238,11 @@ After each increment, verify with the repository's own commands (see the test-dr
 
 After completing all increments for a task:
 
-- [ ] Each increment was individually tested and committed
+- [ ] Each increment was individually tested (and committed, when commits are authorized)
 - [ ] The full test suite passes
 - [ ] The build is clean
 - [ ] The feature works end-to-end as specified
-- [ ] No uncommitted changes remain
+- [ ] No uncommitted changes remain, unless commits were not authorized
 
 ## See Also
 
